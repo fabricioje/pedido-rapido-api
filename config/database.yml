@@ -1,0 +1,22 @@
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  user: fabriciojsilva
+  password: ""
+  host: localhost
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: pedido_rapido_api_development
+
+test:
+  <<: *default
+  database: pedido_rapido_api_test
+
+production:
+  <<: *default
+  database: pedido_rapido_api_production
+  username: pedido_rapido_api
+  password: <%= ENV['PEDIDO_RAPIDO_API_DATABASE_PASSWORD'] %>
