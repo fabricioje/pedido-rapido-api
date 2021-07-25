@@ -6,7 +6,7 @@ RSpec.describe Employe, type: :model do
   it { is_expected.to validate_presence_of(:nickname) }
 
   it { is_expected.to validate_presence_of(:occupation) }
-  it { is_expected.to define_enum_for(:occupation).with_values({ admin: 0, waiter: 1 }) }
+  it { is_expected.to define_enum_for(:occupation).with_values({ admin: 0, waiter: 1, cooker: 2 }) }
 
   it { is_expected.to validate_presence_of(:email) }
 
