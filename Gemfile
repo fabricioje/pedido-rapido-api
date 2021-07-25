@@ -10,6 +10,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'devise_token_auth', '~> 1.1.4'
 
+gem 'jbuilder', '~> 2.10.1'
+
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

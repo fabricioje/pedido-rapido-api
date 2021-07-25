@@ -13,5 +13,5 @@ class Employe < ActiveRecord::Base
   validates :email, presence: true
   validates :occupation, presence: true
 
-  enum occupation: { admin: 0, waiter: 1 }
+  enum occupation: { admin: 0, waiter: 1, cooker: 2 }
 end
