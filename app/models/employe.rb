@@ -6,6 +6,8 @@ class Employe < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
 
+  has_many :orders, dependent: :destroy
+
   validates :name, presence: true
   validates :nickname, presence: true
   validates :email, presence: true
