@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Admin::V1::Products", type: :request do
   let(:employe) { create(:employe) }
-  Category.destroy_all
-  category = FactoryBot.create(:category)
+  let!(:category) { create(:category) }
 
   context "POST /products" do
     let(:url) { "/admin/v1/products" }
