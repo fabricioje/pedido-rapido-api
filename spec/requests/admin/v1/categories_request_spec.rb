@@ -1,19 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe "Admin::V1::Categories", type: :request do
-    let(:employe) { create(:employe) }
+    let(:employee) { create(:employee) }
 
     context "GET /categories" do
 			let(:url) { "/admin/v1/categories" }
 			let!(:categories) { create_list(:category, 5) }
 
 			it "returns all Categories" do
-				get url, headers: auth_header(employe)
-				expect(body_json['categories']).to contain_exactly *categories.as_json(only: %i(id name))
+				get url, headers: auth_header(employee)
+				expect(body_json['categories']).to contain_exactly *Category.all.as_json(only: %i(id name))
 			end
 
 			it "returns success status" do
-				get url, headers: auth_header(employe)
+				get url, headers: auth_header(employee)
 				expect(response).to have_http_status(:ok)
 			end
     end
@@ -26,18 +26,18 @@ RSpec.describe "Admin::V1::Categories", type: :request do
 
 				it 'adds a new Category' do
 					expect do
-						post url, headers: auth_header(employe), params: category_params
+						post url, headers: auth_header(employee), params: category_params
 					end.to change(Category, :count).by(1)
 				end
 
 				it 'returns last added Category' do
-					post url, headers: auth_header(employe), params: category_params
+					post url, headers: auth_header(employee), params: category_params
 					expected_category = Category.last.as_json(only: %i(id name))
 					expect(body_json['category']).to eq expected_category
 				end
 	
 				it 'returns success status' do
-					post url, headers: auth_header(employe), params: category_params
+					post url, headers: auth_header(employee), params: category_params
 					expect(response).to have_http_status(:ok)
 				end
 
@@ -50,17 +50,17 @@ RSpec.describe "Admin::V1::Categories", type: :request do
 	
 				it 'does not add a new Category' do
 					expect do
-						post url, headers: auth_header(employe), params: category_invalid_params
+						post url, headers: auth_header(employee), params: category_invalid_params
 					end.to_not change(Category, :count)
 				end
 	
 				it 'returns error message' do
-					post url, headers: auth_header(employe), params: category_invalid_params
+					post url, headers: auth_header(employee), params: category_invalid_params
 					expect(body_json['errors']['fields']).to have_key('name')
 				end
 	
 				it 'returns unprocessable_entity status' do
-					post url, headers: auth_header(employe), params: category_invalid_params
+					post url, headers: auth_header(employee), params: category_invalid_params
 					expect(response).to have_http_status(:unprocessable_entity)
 				end
 			end
@@ -74,20 +74,20 @@ RSpec.describe "Admin::V1::Categories", type: :request do
 					let(:category_params) { { category: { name: new_name } }.to_json }
 		
 					it 'updates Category' do
-						patch url, headers: auth_header(employe), params: category_params
+						patch url, headers: auth_header(employee), params: category_params
 						category.reload
 						expect(category.name).to eq new_name
 					end
 		
 					it 'returns updated Category' do
-						patch url, headers: auth_header(employe), params: category_params
+						patch url, headers: auth_header(employee), params: category_params
 						category.reload
 						expected_category = category.as_json(only: %i(id name))
 						expect(body_json['category']).to eq expected_category
 					end
 		
 					it 'returns success status' do
-						patch url, headers: auth_header(employe), params: category_params
+						patch url, headers: auth_header(employee), params: category_params
 						expect(response).to have_http_status(:ok)
 					end
 				end
@@ -99,18 +99,18 @@ RSpec.describe "Admin::V1::Categories", type: :request do
 		
 					it 'does not update Category' do
 						old_name = category.name
-						patch url, headers: auth_header(employe), params: category_invalid_params
+						patch url, headers: auth_header(employee), params: category_invalid_params
 						category.reload
 						expect(category.name).to eq old_name
 					end
 		
 					it 'returns error message' do
-						patch url, headers: auth_header(employe), params: category_invalid_params
+						patch url, headers: auth_header(employee), params: category_invalid_params
 						expect(body_json['errors']['fields']).to have_key('name')
 					end
 		
 					it 'returns unprocessable_entity status' do
-						patch url, headers: auth_header(employe), params: category_invalid_params
+						patch url, headers: auth_header(employee), params: category_invalid_params
 						expect(response).to have_http_status(:unprocessable_entity)
 					end
 				end
@@ -122,23 +122,23 @@ RSpec.describe "Admin::V1::Categories", type: :request do
 		
 				it 'removes Category' do
 					expect do  
-						delete url, headers: auth_header(employe)
+						delete url, headers: auth_header(employee)
 					end.to change(Category, :count).by(-1)
 				end
 		
 				it 'returns success status' do
-					delete url, headers: auth_header(employe)
+					delete url, headers: auth_header(employee)
 					expect(response).to have_http_status(:no_content)
 				end
 		
 				it 'does not return any body content' do
-					delete url, headers: auth_header(employe)
+					delete url, headers: auth_header(employee)
 					expect(body_json).to_not be_present
 				end
 		
 				it 'does not remove unassociated product categories' do
 					product_categories = create_list(:category, 3)
-					delete url, headers: auth_header(employe)
+					delete url, headers: auth_header(employee)
 					present_product_categories_ids = product_categories.map(&:id)
 					expected_product_categories = Category.where(id: present_product_categories_ids)
 					expect(expected_product_categories.ids).to contain_exactly(*present_product_categories_ids)

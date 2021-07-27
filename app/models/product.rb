@@ -19,6 +19,9 @@
 #  fk_rails_...  (category_id => categories.id)
 #
 class Product < ApplicationRecord
+  include Paginatable
+  include LikeSearchable
+  
   belongs_to :category
   has_many :order_items, dependent: :destroy
 

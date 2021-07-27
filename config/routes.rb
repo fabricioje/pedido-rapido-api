@@ -9,4 +9,11 @@ Rails.application.routes.draw do
       resources :products
     end
   end
+
+  namespace :front do
+    namespace :v1 do
+      get "home" => "home#index"
+      resources :products
+    end
+  end
 end
