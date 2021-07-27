@@ -3,7 +3,9 @@ module Admin::V1
     before_action :find_employee, only: [:update, :destroy, :show]
 
     def index
-      @employees = Employee.all
+      # @employees = Employee.all
+      @loading_service = Shared::ModelLoadingService.new(Employee.all, searchable_params)
+      @loading_service.call
     end
 
     def create
@@ -39,6 +41,10 @@ module Admin::V1
 
     def find_employee
       @employee = Employee.find(params[:id])
+    end
+
+    def searchable_params
+      params.permit({ search: :name }, { order: {} }, :page, :length)
     end
   end
 end

@@ -3,8 +3,7 @@ module Front::V1
 		before_action :find_product, only: [:update, :destroy, :show]
 
     def index
-      # @products = Product.all
-      @loading_service = Front::ModelLoadingService.new(Product.all, searchable_params)
+      @loading_service = Shared::ModelLoadingService.new(Product.all, searchable_params)
       @loading_service.call
     end
 

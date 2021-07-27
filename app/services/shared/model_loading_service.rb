@@ -1,4 +1,4 @@
-module Front
+module Shared
   class ModelLoadingService
     attr_accessor :records, :pagination
     

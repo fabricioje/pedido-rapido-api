@@ -21,6 +21,9 @@
 #  fk_rails_...  (product_id => products.id)
 #
 class OrderItem < ApplicationRecord
+  include Paginatable
+  include LikeSearchable
+  
   belongs_to :order
   belongs_to :product
 

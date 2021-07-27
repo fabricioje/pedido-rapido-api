@@ -32,6 +32,9 @@
 #  index_employees_on_uid_and_provider      (uid,provider) UNIQUE
 #
 class Employee < ActiveRecord::Base
+  include Paginatable
+  include LikeSearchable
+  
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User

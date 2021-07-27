@@ -3,7 +3,9 @@ module Admin::V1
 		before_action :find_category, only: [:update, :destroy, :show]
 
     def index
-      @categories = Category.all
+      # @categories = Category.all
+      @loading_service = Shared::ModelLoadingService.new(Category.all, searchable_params)
+      @loading_service.call
     end
 
     def create
@@ -41,5 +43,9 @@ module Admin::V1
 		def find_category
 			@category = Category.find(params[:id])
 		end
+
+    def searchable_params
+      params.permit({ search: :name }, { order: {} }, :page, :length)
+    end
 	end 
 end
