@@ -9,6 +9,9 @@ RSpec.describe "Admin::V1::Categories", type: :request do
 
 			it "returns all Categories" do
 				get url, headers: auth_header(employee)
+
+        pp response
+
 				expect(body_json['categories']).to contain_exactly *Category.all.as_json(only: %i(id name))
 			end
 

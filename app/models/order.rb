@@ -20,6 +20,9 @@
 #  fk_rails_...  (employee_id => employees.id)
 #
 class Order < ApplicationRecord
+  include Paginatable
+  include LikeSearchable
+  
   belongs_to :employee
   has_many :order_items, dependent: :destroy
 

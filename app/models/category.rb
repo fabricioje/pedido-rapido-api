@@ -8,7 +8,10 @@
 #  updated_at :datetime         not null
 #
 class Category < ApplicationRecord
-    has_many :products, dependent: :restrict_with_error
+  include Paginatable
+  include LikeSearchable
 
-    validates :name, presence: true, uniqueness: { case_sensitive: false }
+  has_many :products, dependent: :restrict_with_error
+
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
 end
