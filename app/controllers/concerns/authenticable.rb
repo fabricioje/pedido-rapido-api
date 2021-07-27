@@ -1,8 +1,8 @@
 module Authenticable
-	extend ActiveSupport::Concern
+  extend ActiveSupport::Concern
 
-	included do
-		include DeviseTokenAuth::Concerns::SetUserByToken
-		before_action :authenticate_employe!
-	end
+  included do
+    include DeviseTokenAuth::Concerns::SetUserByToken
+    before_action :authenticate_employee!
+  end
 end
