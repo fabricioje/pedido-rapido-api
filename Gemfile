@@ -19,9 +19,11 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'faker'
+  gem "database_cleaner"
 end
 
 group :development do
+  gem "annotate"
   gem 'listen', '~> 3.3'
   gem 'spring'
 end
