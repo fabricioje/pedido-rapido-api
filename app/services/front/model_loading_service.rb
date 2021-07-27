@@ -9,10 +9,7 @@ module Front
       @pagination = { page: @params[:page].to_i, length: @params[:length].to_i  }
     end
 
-    def call
-
-      # byebug
-      
+    def call      
       set_pagination_values
       searched = search_records(@searchable_model)
       @records = searched.order(@params[:order].to_h)
