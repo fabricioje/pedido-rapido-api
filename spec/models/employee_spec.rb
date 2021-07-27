@@ -1,30 +1,37 @@
 # == Schema Information
 #
-# Table name: employes
+# Table name: employees
 #
 #  id                     :bigint           not null, primary key
-#  provider               :string           default("email"), not null
-#  uid                    :string           default(""), not null
-#  encrypted_password     :string           default(""), not null
-#  reset_password_token   :string
-#  reset_password_sent_at :datetime
 #  allow_password_change  :boolean          default(FALSE)
-#  remember_created_at    :datetime
+#  confirmation_sent_at   :datetime
 #  confirmation_token     :string
 #  confirmed_at           :datetime
-#  confirmation_sent_at   :datetime
-#  unconfirmed_email      :string
+#  email                  :string
+#  encrypted_password     :string           default(""), not null
 #  name                   :string
 #  nickname               :string
-#  email                  :string
 #  occupation             :integer          default("waiter")
+#  provider               :string           default("email"), not null
+#  remember_created_at    :datetime
+#  reset_password_sent_at :datetime
+#  reset_password_token   :string
 #  tokens                 :json
+#  uid                    :string           default(""), not null
+#  unconfirmed_email      :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
-require 'rails_helper'
+# Indexes
+#
+#  index_employees_on_confirmation_token    (confirmation_token) UNIQUE
+#  index_employees_on_email                 (email) UNIQUE
+#  index_employees_on_reset_password_token  (reset_password_token) UNIQUE
+#  index_employees_on_uid_and_provider      (uid,provider) UNIQUE
+#
+require "rails_helper"
 
-RSpec.describe Employe, type: :model do
+RSpec.describe Employee, type: :model do
   it { is_expected.to validate_presence_of(:name) }
 
   it { is_expected.to validate_presence_of(:nickname) }

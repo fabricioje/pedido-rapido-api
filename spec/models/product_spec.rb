@@ -3,12 +3,20 @@
 # Table name: products
 #
 #  id          :bigint           not null, primary key
-#  name        :string
 #  description :text
+#  name        :string
 #  price       :decimal(10, 2)
-#  category_id :bigint           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  category_id :bigint           not null
+#
+# Indexes
+#
+#  index_products_on_category_id  (category_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (category_id => categories.id)
 #
 require 'rails_helper'
 

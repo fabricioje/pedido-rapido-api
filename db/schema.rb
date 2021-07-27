@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2021_07_25_181130) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "employes", force: :cascade do |t|
+  create_table "employees", force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -40,10 +40,10 @@ ActiveRecord::Schema.define(version: 2021_07_25_181130) do
     t.json "tokens"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["confirmation_token"], name: "index_employes_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_employes_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_employes_on_reset_password_token", unique: true
-    t.index ["uid", "provider"], name: "index_employes_on_uid_and_provider", unique: true
+    t.index ["confirmation_token"], name: "index_employees_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_employees_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_employees_on_reset_password_token", unique: true
+    t.index ["uid", "provider"], name: "index_employees_on_uid_and_provider", unique: true
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -60,12 +60,12 @@ ActiveRecord::Schema.define(version: 2021_07_25_181130) do
   create_table "orders", force: :cascade do |t|
     t.string "name"
     t.string "table_numer"
-    t.bigint "employe_id", null: false
+    t.bigint "employee_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "status"
     t.datetime "delete_at"
-    t.index ["employe_id"], name: "index_orders_on_employe_id"
+    t.index ["employee_id"], name: "index_orders_on_employee_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -80,6 +80,6 @@ ActiveRecord::Schema.define(version: 2021_07_25_181130) do
 
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
-  add_foreign_key "orders", "employes"
+  add_foreign_key "orders", "employees"
   add_foreign_key "products", "categories"
 end
