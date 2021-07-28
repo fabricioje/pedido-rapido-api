@@ -10,7 +10,6 @@
 #  email                  :string
 #  encrypted_password     :string           default(""), not null
 #  name                   :string
-#  nickname               :string
 #  occupation             :integer          default("waiter")
 #  provider               :string           default("email"), not null
 #  remember_created_at    :datetime
@@ -32,7 +31,6 @@
 FactoryBot.define do
   factory :employee do
     name { Faker::Name.name }
-    nickname { Faker::FunnyName.name }
     email { Faker::Internet.email }
     password { "123456" }
     password_confirmation { "123456" }

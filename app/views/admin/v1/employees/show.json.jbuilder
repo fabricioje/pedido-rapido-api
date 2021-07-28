@@ -1,3 +1,3 @@
 json.employee do
-  json.(@employee, :id, :name, :occupation, :nickname, :email)
+  json.(@employee, :id, :name, :occupation, :email)
 end

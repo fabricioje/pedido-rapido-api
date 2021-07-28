@@ -10,7 +10,6 @@
 #  email                  :string
 #  encrypted_password     :string           default(""), not null
 #  name                   :string
-#  nickname               :string
 #  occupation             :integer          default("waiter")
 #  provider               :string           default("email"), not null
 #  remember_created_at    :datetime
@@ -33,8 +32,6 @@ require "rails_helper"
 
 RSpec.describe Employee, type: :model do
   it { is_expected.to validate_presence_of(:name) }
-
-  it { is_expected.to validate_presence_of(:nickname) }
 
   it { is_expected.to validate_presence_of(:occupation) }
   it { is_expected.to define_enum_for(:occupation).with_values({ admin: 0, waiter: 1, cooker: 2 }) }
