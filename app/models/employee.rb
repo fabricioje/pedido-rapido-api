@@ -12,7 +12,6 @@
 #  email                  :string
 #  encrypted_password     :string           default(""), not null
 #  name                   :string
-#  nickname               :string
 #  occupation             :integer          default("waiter")
 #  provider               :string           default("email"), not null
 #  remember_created_at    :datetime
@@ -34,7 +33,7 @@
 class Employee < ActiveRecord::Base
   include Paginatable
   include LikeSearchable
-  
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
@@ -42,7 +41,6 @@ class Employee < ActiveRecord::Base
   has_many :orders, dependent: :destroy
 
   validates :name, presence: true
-  validates :nickname, presence: true
   validates :email, presence: true
   validates :occupation, presence: true
 

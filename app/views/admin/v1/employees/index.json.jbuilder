@@ -1,5 +1,5 @@
 json.employees do
-  json.array! @loading_service.records, :id, :name, :occupation, :nickname, :email
+  json.array! @loading_service.records, :id, :name, :occupation, :email
 end
 
 json.meta do

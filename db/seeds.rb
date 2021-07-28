@@ -8,7 +8,6 @@
 
 Employee.create(
   name: "Admin",
-  nickname: "Admin",
   email: "admin@admin.com",
   occupation: :admin,
   password: "admin123",
