@@ -11,6 +11,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise_token_auth', '~> 1.1.4'
 
 gem 'jbuilder', '~> 2.10.1'
+gem 'rack-cors'
 
 
 group :development, :test do
