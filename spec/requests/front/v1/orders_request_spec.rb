@@ -158,6 +158,77 @@ RSpec.describe "front::V1::Orders", type: :request do
   context "Cooker context" do
     let(:employee) { create(:employee, occupation: :cooker) }
 
+    context "POST /orders" do
+      let(:url) { "/front/v1/orders" }
+
+      context "with valid params" do
+        let!(:product_list) { create_list(:product, 5) }
+
+        let(:order_params) do
+          order = attributes_for(:order)
+          order[:employee_id] = employee.id
+          order[:order_items] = []
+          product_list.each do |product|
+            order[:order_items] << attributes_for(:order_item, product_id: product.id)
+          end
+          { order: order }.to_json
+        end
+
+        it "adds a new Order" do
+          expect do
+            post url, headers: auth_header(employee), params: order_params
+          end.to change(Order, :count).by(1)
+        end
+
+        it "returns last added Order" do
+          post url, headers: auth_header(employee), params: order_params
+          expected_order = Order.last
+          expect(body_json["order"]["id"]).to eq expected_order.id
+        end
+
+        it "returns success status" do
+          post url, headers: auth_header(employee), params: order_params
+          expect(response).to have_http_status(:ok)
+        end
+      end
+
+      context "with invalid params" do
+        let(:order_invalid_params) do
+          { order: attributes_for(:order, name: nil) }.to_json
+        end
+
+        let!(:product_list) { create_list(:product, 5) }
+
+        let(:order_invalid_params) do
+          order = attributes_for(:order)
+          order[:name] = nil
+          order[:employee_id] = nil
+          order[:order_items] = []
+          product_list.each do |product|
+            order[:order_items] << attributes_for(:order_item, product_id: product.id)
+          end
+          { order: order }.to_json
+        end
+
+        it "does not add a new Order" do
+          expect do
+            post url, headers: auth_header(employee), params: order_invalid_params
+          end.to_not change(Order, :count)
+        end
+
+        it "returns error message" do
+          post url, headers: auth_header(employee), params: order_invalid_params
+          expect(body_json["errors"]["fields"]).to have_key("name")
+          expect(body_json["errors"]["fields"]).to have_key("employee")
+        end
+
+        it "returns unprocessable_entity status" do
+          post url, headers: auth_header(employee), params: order_invalid_params
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
+    end
+
     context "GET /orders" do
       let(:url) { "/front/v1/orders" }
 

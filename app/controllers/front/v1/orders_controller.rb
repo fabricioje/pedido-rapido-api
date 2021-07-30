@@ -1,6 +1,6 @@
 module Front::V1
   class OrdersController < ApiController
-    before_action :find_order, only: [:update, :destroy, :show]
+    before_action :find_order, only: [:update, :show]
 
     def index
       @loading_service = Shared::ModelLoadingService.new(Order.all, searchable_params)
@@ -11,7 +11,7 @@ module Front::V1
       order_service = Order::CreateService.new(order_params)
       order_service.call()
       render :show, locals: { order: order_service.order }
-    rescue => error
+    rescue
       render_error(fields: order_service.errors)
     end
 
