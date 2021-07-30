@@ -1,30 +1,33 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.1'
+ruby "2.7.1"
 
-gem 'rails', '~> 6.1.4'
-gem 'pg', '~> 1.1'
-gem 'puma', '~> 5.0'
-gem 'bootsnap', '>= 1.4.4', require: false
+gem "rails", "~> 6.1.4"
+gem "pg", "~> 1.1"
+gem "puma", "~> 5.0"
+gem "bootsnap", ">= 1.4.4", require: false
 
-gem 'devise_token_auth', '~> 1.1.4'
+gem "devise_token_auth", "~> 1.1.4"
 
-gem 'jbuilder', '~> 2.10.1'
-gem 'rack-cors'
-
+gem "jbuilder", "~> 2.10.1"
+gem "rack-cors"
 
 group :development, :test do
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'rspec-rails', '~> 4.0.1'
-  gem 'factory_bot_rails'
-  gem 'shoulda-matchers', '~> 4.0'
-  gem 'faker'
+  gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
+  gem "rspec-rails", "~> 4.0.1"
+  gem "factory_bot_rails"
+  gem "shoulda-matchers", "~> 4.0"
+  gem "faker"
   gem "database_cleaner"
+
+  gem "simplecov", require: false
+  gem "rexml", "~> 3.2.4"
+  gem "rubycritic", require: false
 end
 
 group :development do
   gem "annotate"
-  gem 'listen', '~> 3.3'
-  gem 'spring'
+  gem "listen", "~> 3.3"
+  gem "spring"
 end

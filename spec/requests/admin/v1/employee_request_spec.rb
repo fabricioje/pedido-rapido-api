@@ -63,25 +63,47 @@ RSpec.describe "Admin::V1::Employees", type: :request do
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
+  end
 
-    context "PATCH /employees/:id" do
-      let(:employee) { create(:employee) }
-      let(:url) { "/admin/v1/employees/#{employee.id}" }
+  context "PATCH /employees/:id" do
+    let(:employee) { create(:employee) }
+    let(:url) { "/admin/v1/employees/#{employee.id}" }
 
-      context "with valid params" do
-        let(:new_name) { "My new Employee" }
-        let(:employee_params) { { employee: { name: new_name } }.to_json }
+    context "with valid params" do
+      let(:new_name) { "My new Employee" }
+      let(:employee_params) { { employee: { name: new_name } }.to_json }
 
-        it "updates Employee" do
-          patch url, headers: auth_header(admin), params: employee_params
-          employee.reload
-          expect(employee.name).to eq new_name
+      context "PATCH /employees/:id" do
+        let(:employee) { create(:employee) }
+        let(:url) { "/admin/v1/employees/#{employee.id}" }
+
+        context "with valid params" do
+          let(:new_name) { "My new Employee" }
+          let(:employee_params) { { employee: { name: new_name } }.to_json }
+
+          it "updates Employee" do
+            patch url, headers: auth_header(admin), params: employee_params
+            employee.reload
+            expect(employee.name).to eq new_name
+          end
+
+          it "returns updated Employee" do
+            patch url, headers: auth_header(admin), params: employee_params
+            employee.reload
+            expected_employee = employee.as_json(only: %i(id name occupation email))
+            expect(body_json["employee"]).to eq expected_employee
+          end
+
+          it "returns success status" do
+            patch url, headers: auth_header(admin), params: employee_params
+            expect(response).to have_http_status(:ok)
+          end
         end
 
         it "returns updated Employee" do
           patch url, headers: auth_header(admin), params: employee_params
           employee.reload
-          expected_employee = employee.as_json(only: %i(id name occupation email))
+          expected_employee = employee.as_json(only: %i(id name occupation nickname email))
           expect(body_json["employee"]).to eq expected_employee
         end
 

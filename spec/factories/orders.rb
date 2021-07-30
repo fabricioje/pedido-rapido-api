@@ -2,14 +2,14 @@
 #
 # Table name: orders
 #
-#  id          :bigint           not null, primary key
-#  delete_at   :datetime
-#  name        :string
-#  status      :string
-#  table_numer :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  employee_id :bigint           not null
+#  id           :bigint           not null, primary key
+#  delete_at    :datetime
+#  name         :string
+#  status       :integer          default(0)
+#  table_number :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  employee_id  :bigint           not null
 #
 # Indexes
 #
@@ -21,8 +21,16 @@
 #
 FactoryBot.define do
   factory :order do
-    name { "Order" }
-    table_numer { Faker::Number.between(from: 1, to: 10) }
+    name { Faker::Name.name }
+    table_number { Faker::Number.between(from: 1, to: 10) }
     employee
+
+    trait :with_items do
+      after :create do |order|
+        order_items = create_list(:order_item, 5, order: order)
+        # order.subtotal = items.sum(:payed_price)
+        # order.total_amount = order.subtotal
+      end
+    end
   end
 end

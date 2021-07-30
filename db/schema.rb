@@ -58,11 +58,11 @@ ActiveRecord::Schema.define(version: 2021_07_28_112245) do
 
   create_table "orders", force: :cascade do |t|
     t.string "name"
-    t.string "table_numer"
+    t.string "table_number"
     t.bigint "employee_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "status"
+    t.integer "status", default: 0
     t.datetime "delete_at"
     t.index ["employee_id"], name: "index_orders_on_employee_id"
   end
