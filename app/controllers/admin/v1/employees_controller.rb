@@ -1,5 +1,5 @@
 module Admin::V1
-  class EmployeesController < ApplicationController
+  class EmployeesController < ApiController
     before_action :find_employee, only: [:update, :destroy, :show]
 
     def index
