@@ -2,14 +2,14 @@
 #
 # Table name: orders
 #
-#  id          :bigint           not null, primary key
-#  delete_at   :datetime
-#  name        :string
-#  status      :string
-#  table_numer :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  employee_id :bigint           not null
+#  id           :bigint           not null, primary key
+#  delete_at    :datetime
+#  name         :string
+#  status       :integer          default(0)
+#  table_number :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  employee_id  :bigint           not null
 #
 # Indexes
 #
@@ -22,7 +22,12 @@
 require "rails_helper"
 
 RSpec.describe Order, type: :model do
-  it { is_expected.to validate_presence_of(:table_numer) }
+  it { is_expected.to validate_presence_of(:table_number) }
 
   it { is_expected.to belong_to :employee }
+
+  it { is_expected.to validate_presence_of(:name) }
+
+  it { is_expected.to validate_presence_of(:status) }
+  it { is_expected.to define_enum_for(:status).with_values({ pending: 0, completed: 1, canceled: 2 }) }
 end

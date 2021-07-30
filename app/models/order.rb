@@ -2,14 +2,14 @@
 #
 # Table name: orders
 #
-#  id          :bigint           not null, primary key
-#  delete_at   :datetime
-#  name        :string
-#  status      :string
-#  table_numer :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  employee_id :bigint           not null
+#  id           :bigint           not null, primary key
+#  delete_at    :datetime
+#  name         :string
+#  status       :integer          default(0)
+#  table_number :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  employee_id  :bigint           not null
 #
 # Indexes
 #
@@ -22,9 +22,14 @@
 class Order < ApplicationRecord
   include Paginatable
   include LikeSearchable
-  
+
   belongs_to :employee
+
   has_many :order_items, dependent: :destroy
 
-  validates :table_numer, presence: true
+  validates :table_number, presence: true
+  validates :status, presence: true
+  validates :name, presence: true
+
+  enum status: { pending: 0, completed: 1, canceled: 2 }
 end
