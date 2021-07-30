@@ -3,7 +3,6 @@ module Admin::V1
 		before_action :find_category, only: [:update, :destroy, :show]
 
     def index
-      # @categories = Category.all
       @loading_service = Shared::ModelLoadingService.new(Category.all, searchable_params)
       @loading_service.call
     end

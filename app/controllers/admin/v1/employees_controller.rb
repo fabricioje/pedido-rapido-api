@@ -1,9 +1,8 @@
 module Admin::V1
-  class EmployeesController < ApiController
+  class EmployeesController < ApplicationController
     before_action :find_employee, only: [:update, :destroy, :show]
 
     def index
-      # @employees = Employee.all
       @loading_service = Shared::ModelLoadingService.new(Employee.all, searchable_params)
       @loading_service.call
     end
@@ -29,7 +28,7 @@ module Admin::V1
 
     def employee_params
       return {} unless params.has_key?(:employee)
-      params.require(:employee).permit(:name, :nickname, :email, :password, :password_confirmation, :occupation)
+      params.require(:employee).permit(:name, :email, :password, :password_confirmation, :occupation)
     end
 
     def save_employee!
