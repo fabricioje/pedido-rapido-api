@@ -5,7 +5,7 @@
 #  id           :bigint           not null, primary key
 #  delete_at    :datetime
 #  name         :string
-#  status       :integer          default(0)
+#  status       :integer          default("pending")
 #  table_number :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null

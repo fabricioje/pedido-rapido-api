@@ -32,7 +32,7 @@ module Front::V1
     end
 
     def searchable_params
-      params.permit({ search: [:id, :name, :table_number] }, { order: {} }, :status, :page, :length)
+      params.permit({ search: [:id, :name, :table_number, :status] }, { order: {} }, :page, :length)
     end
   end
 end

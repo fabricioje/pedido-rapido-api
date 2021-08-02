@@ -5,7 +5,7 @@
 #  id           :bigint           not null, primary key
 #  delete_at    :datetime
 #  name         :string
-#  status       :integer          default(0)
+#  status       :integer          default("pending")
 #  table_number :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -23,6 +23,8 @@ class Order < ApplicationRecord
   include Paginatable
   include LikeSearchable
 
+  default_scope { order([:status, created_at: "desc"]) }
+
   belongs_to :employee
 
   has_many :order_items, dependent: :destroy
@@ -31,5 +33,5 @@ class Order < ApplicationRecord
   validates :status, presence: true
   validates :name, presence: true
 
-  enum status: { pending: 0, completed: 1, canceled: 2 }
+  enum status: { pending: 0, preparation: 1, completed: 2, canceled: 3 }
 end
