@@ -14,6 +14,22 @@ Employee.create(
   password_confirmation: "admin123",
 ) unless Employee.exists?(email: "admin@admin.com")
 
+Employee.create(
+  name: "Cozinha",
+  email: "cozinha@admin.com",
+  occupation: :cooker,
+  password: "123456",
+  password_confirmation: "123456",
+) unless Employee.exists?(email: "cozinha@admin.com")
+
+Employee.create(
+  name: "Atendente",
+  email: "atendente@admin.com",
+  occupation: :waiter,
+  password: "123456",
+  password_confirmation: "123456",
+) unless Employee.exists?(email: "atendente@admin.com")
+
 categories = []
 rand(20..100).times do |n|
   categories << Category.create(name: Faker::Restaurant.type)
